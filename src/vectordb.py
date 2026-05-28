@@ -4,7 +4,7 @@ from langchain_chroma import Chroma
 from utils import embeddings
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-CHROMA_DB_DIR = "./chroma_db"
+CHROMA_DB_DIR = "data/processed/chroma_db"
 
 
 def build_vector_database(

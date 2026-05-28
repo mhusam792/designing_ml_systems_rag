@@ -7,7 +7,7 @@ from utils import embeddings
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "llama3.2:3b"
-CHROMA_DB_DIR = "./chroma_db"
+CHROMA_DB_DIR = "data/processed/chroma_db"
 
 
 def format_docs(docs):

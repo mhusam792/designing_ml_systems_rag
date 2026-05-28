@@ -9,7 +9,7 @@ PDF_PATH = "data/raw/01_Designing_Machine_Learning_Systems.pdf"
 STRUCTURE_JSON = "data/processed/book_structure.json"
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-CHROMA_DB_DIR = "./chroma_db"
+CHROMA_DB_DIR = "data/processed/chroma_db"
 QUESTIONS_ANSWERS_PATH = "data/raw/qa.jsonl"
 
 LLM_MODEL = "llama3.2:3b"
