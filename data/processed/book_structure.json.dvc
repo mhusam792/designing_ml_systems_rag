@@ -1,0 +1,5 @@
+outs:
+- md5: aefade15f63630d0bedf272b8babc79e
+  size: 59376
+  hash: md5
+  path: book_structure.json
