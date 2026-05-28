@@ -1,0 +1,5 @@
+outs:
+- md5: 21c78dd2367daef53454052ee09099ee
+  size: 10939910
+  hash: md5
+  path: 01_Designing_Machine_Learning_Systems.pdf
