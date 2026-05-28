@@ -38,16 +38,3 @@ def build_chunks_with_metadata(
     structure_df = load_structure_dataframe(structure_json)
 
     return enrich_chunks(chunks, structure_df)
-
-
-if __name__ == "__main__":
-
-    PDF_PATH = "data/raw/01_Designing_Machine_Learning_Systems.pdf"
-    STRUCTURE_JSON = "book/book_structure.json"
-
-    chunks = build_chunks_with_metadata(
-        pdf_path=PDF_PATH,
-        structure_json=STRUCTURE_JSON,
-    )
-
-    print(f"Total chunks: {len(chunks)}")

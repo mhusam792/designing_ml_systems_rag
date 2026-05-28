@@ -1,7 +1,7 @@
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
 
+from utils import embeddings
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 CHROMA_DB_DIR = "./chroma_db"
@@ -9,7 +9,6 @@ CHROMA_DB_DIR = "./chroma_db"
 
 def build_vector_database(
     chunks: list[Document],
-    embedding_model: str = EMBEDDING_MODEL,
     persist_directory: str = CHROMA_DB_DIR,
 ) -> Chroma:
     """
@@ -26,10 +25,8 @@ def build_vector_database(
         persist_directory (str): Chroma database directory.
 
     Returns:
-        tuple[HuggingFaceEmbeddings, Chroma]: Embedding model and persisted vector store.
+        Chroma: persisted vector store.
     """
-
-    embeddings = HuggingFaceEmbeddings(model_name=embedding_model)  # Free & local
 
     vectorstore = Chroma.from_documents(
         documents=chunks,
@@ -37,4 +34,4 @@ def build_vector_database(
         persist_directory=persist_directory,
     )
 
-    return embeddings, vectorstore
+    return vectorstore

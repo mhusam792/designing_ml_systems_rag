@@ -288,13 +288,3 @@ def build_pdf_structure(pdf_path: str, output_json: str) -> pd.DataFrame:
     df.to_json(output_json, orient="records", force_ascii=False, indent=4)
 
     return df
-
-
-if __name__ == "__main__":
-
-    PDF_PATH = "data/raw/01_Designing_Machine_Learning_Systems.pdf"
-    OUTPUT_JSON = "data/processed/book_structure.json"
-
-    df = build_pdf_structure(PDF_PATH, OUTPUT_JSON)
-
-    print(df.head())
