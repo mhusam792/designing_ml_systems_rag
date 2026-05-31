@@ -1,0 +1,5 @@
+outs:
+- md5: 2c8433fd882cbf3ebf18a414735654b6
+  size: 116
+  hash: md5
+  path: app.log
