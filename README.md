@@ -112,7 +112,7 @@ docker compose up --build
 | Service   | URL                                            |
 | --------- | ---------------------------------------------- |
 | FastAPI   | [http://localhost:8000](http://localhost:8000) |
-| Gradio UI | [http://localhost:7860](http://localhost:7860) |
+| Gradio UI | [http://localhost:7861](http://localhost:7861) |
 
 ---
 
