@@ -1,8 +1,3 @@
-تمام — ده README جاهز بشكل “portfolio / production-style” لمشروعك RAG system 👇
-(تقدر تنسخه مباشرة وتحطه في GitHub)
-
----
-
 # 📚 Designing ML Systems RAG
 
 A production-style **Retrieval-Augmented Generation (RAG) system** built on top of *Designing Machine Learning Systems* PDF, combining:
@@ -147,7 +142,7 @@ POST /query
 
 ```json
 {
-  "question": "What is machine learning?"
+  "question": "What is the phases of designing machine learning system?"
 }
 ```
 
@@ -226,7 +221,7 @@ GRADIO_API_URL=http://fastapi:8000/query
 # 👨‍💻 Author
 
 **Mohamed Hussam**
-AI Engineer | ML Systems | LLM Applications
+AI/ML Engineer
 
 ---
 
