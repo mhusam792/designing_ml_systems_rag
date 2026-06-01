@@ -1,7 +1,8 @@
 import gradio as gr
 import requests
+from src.core.config import GRADIO_API_URL
 
-API_URL = "http://127.0.0.1:8000/query"
+API_URL = GRADIO_API_URL
 
 
 def ask_question(question: str):
@@ -78,4 +79,4 @@ Ask questions about the book and inspect the retrieved context.
 
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)

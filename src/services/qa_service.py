@@ -5,6 +5,7 @@ from langchain_ollama import ChatOllama
 
 from src.utils import embeddings
 from src.core.logging import logger
+from src.core.config import OLLAMA_BASE_URL
 
 
 class QAService:
@@ -24,6 +25,7 @@ class QAService:
 
         self.llm = ChatOllama(
             model=llm_model,
+            base_url=OLLAMA_BASE_URL,
             temperature=0,
         )
 

@@ -220,3 +220,6 @@ __marimo__/
 
 # testing scripts
 test/
+
+# env.docker
+.env.docker

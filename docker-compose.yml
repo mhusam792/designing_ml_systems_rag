@@ -1,0 +1,46 @@
+services:
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: docker/fastapi/Dockerfile
+
+    container_name: fastapi
+
+    env_file:
+      - .env.docker
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./data/processed/chroma_db:/app/data/processed/chroma_db
+
+    restart: unless-stopped
+
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  gradio:
+    build:
+      context: .
+      dockerfile: docker/gradio/Dockerfile
+
+    container_name: gradio
+
+    env_file:
+      - .env.docker
+
+    depends_on:
+      - fastapi
+
+    ports:
+      - "7861:7860"
+
+    restart: unless-stopped
+
+    environment:
+      - GRADIO_API_URL=http://fastapi:8000/query
