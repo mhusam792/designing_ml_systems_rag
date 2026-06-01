@@ -17,42 +17,62 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # (OPTIONAL) only if you really need it
-      - name: Build base image
-        run: docker build -t rag-base -f docker/base/Dockerfile .
-
-      - name: Build services (CI compose)
+      # Build CI services
+      - name: Build services
         run: docker compose -f docker-compose.ci.yml build
 
+      # Start services
       - name: Start services
         run: docker compose -f docker-compose.ci.yml up -d
 
-      # 🔥 WAIT FOR OLLAMA (IMPORTANT)
+      # ---------------------------
+      # Wait for Ollama
+      # ---------------------------
       - name: Wait for Ollama
         run: |
-          for i in {1..40}; do
-            curl -s http://localhost:11434/api/tags && break
-            echo "waiting ollama..."
+          echo "Waiting for Ollama..."
+          for i in {1..60}; do
+            if curl -s http://localhost:11434/api/tags > /dev/null; then
+              echo "Ollama is up"
+              exit 0
+            fi
             sleep 5
           done
+          echo "Ollama failed to start"
+          docker compose -f docker-compose.ci.yml logs ollama
+          exit 1
 
-      # 🔥 WAIT FOR FASTAPI
+      # ---------------------------
+      # Wait for FastAPI
+      # ---------------------------
       - name: Wait for FastAPI
         run: |
-          for i in {1..30}; do
-            curl -s http://localhost:8000/health && break
-            echo "waiting fastapi..."
+          echo "Waiting for FastAPI..."
+          for i in {1..40}; do
+            if curl -s http://localhost:8000/health > /dev/null; then
+              echo "FastAPI is up"
+              exit 0
+            fi
             sleep 3
           done
+          echo "FastAPI failed to start"
+          docker compose -f docker-compose.ci.yml logs fastapi
+          exit 1
 
+      # ---------------------------
+      # Health check
+      # ---------------------------
       - name: Health check
         run: curl -f http://localhost:8000/health
 
+      # ---------------------------
+      # RAG test
+      # ---------------------------
       - name: RAG test query
         run: |
           RESPONSE=$(curl -s -X POST http://localhost:8000/query \
-          -H "Content-Type: application/json" \
-          -d '{"question":"What is machine learning?"}')
+            -H "Content-Type: application/json" \
+            -d '{"question":"What is machine learning?"}')
 
           echo "$RESPONSE"
 
