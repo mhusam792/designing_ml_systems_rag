@@ -2,7 +2,7 @@ from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from metadata import load_structure_dataframe, enrich_chunks
+from src.rag.metadata import load_structure_dataframe, enrich_chunks
 
 
 def build_chunks_with_metadata(

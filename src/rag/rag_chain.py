@@ -3,7 +3,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import ChatOllama
 from langchain_chroma import Chroma
 
-from utils import embeddings
+from src.utils import embeddings
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "llama3.2:3b"

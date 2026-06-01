@@ -1,46 +1,53 @@
-from chunking import build_chunks_with_metadata
-from vectordb import build_vector_database
-from rag_chain import build_rag_chain
-from pdf_structure import build_pdf_structure
+import time
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
 
-import json
-
-PDF_PATH = "data/raw/01_Designing_Machine_Learning_Systems.pdf"
-STRUCTURE_JSON = "data/processed/book_structure.json"
-
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-CHROMA_DB_DIR = "data/processed/chroma_db"
-QUESTIONS_ANSWERS_PATH = "data/raw/qa.jsonl"
-
-LLM_MODEL = "llama3.2:3b"
+from src.services.qa_service import QAService
+from src.api.routes import router
+from src.core.config import CHROMA_DB_DIR, LLM_MODEL, TOP_K
+from src.core.logging import logger
 
 
-if __name__ == "__main__":
+@asynccontextmanager
+async def lifespan(app: FastAPI):
 
-    df = build_pdf_structure(PDF_PATH, STRUCTURE_JSON)
-
-    chunks = build_chunks_with_metadata(
-        pdf_path=PDF_PATH,
-        structure_json=STRUCTURE_JSON,
+    app.state.qa_service = QAService(
+        chroma_dir=str(CHROMA_DB_DIR),
+        llm_model=LLM_MODEL,
+        top_k=TOP_K,
     )
 
-    print(f"Total chunks: {len(chunks)}")
+    yield
 
-    vectorstore = build_vector_database(chunks=chunks, persist_directory=CHROMA_DB_DIR)
+    print("Shutdown")
 
-    rag_chain = build_rag_chain()
 
-    data = []
-    with open(QUESTIONS_ANSWERS_PATH) as f:
-        for line in f:
-            data.append(json.loads(line))
+app = FastAPI(lifespan=lifespan)
 
-    for q in data:
-        print(q["question"])
-        print()
 
-        response = rag_chain.invoke(q["question"])
-        print(response)
+@app.middleware("http")
+async def log_requests(
+    request: Request,
+    call_next,
+):
 
-        print("#" * 50)
-        print()
+    start_time = time.perf_counter()
+
+    response = await call_next(request)
+
+    duration = round(
+        time.perf_counter() - start_time,
+        3,
+    )
+
+    logger.info(
+        f"{request.method} "
+        f"{request.url.path} "
+        f"status={response.status_code} "
+        f"duration={duration}s"
+    )
+
+    return response
+
+
+app.include_router(router)
