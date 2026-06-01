@@ -16,6 +16,9 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
+      - name: Build base image
+        run: docker build -t rag-base -f docker/base/Dockerfile .
+        
       - name: Build services
         run: docker compose build
 
