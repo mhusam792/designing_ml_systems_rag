@@ -20,7 +20,7 @@ jobs:
         run: docker compose build
 
       - name: Start services
-        run: docker compose up -d
+        run: docker compose -f docker-compose.ci.yml up -d
 
       - name: Wait for FastAPI
         run: sleep 30
