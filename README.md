@@ -13,7 +13,7 @@ A production-style **Retrieval-Augmented Generation (RAG) system** built on top 
 
 # 🚀 Demo
 
-[![RAG Demo](assets/demo.gif)](https://github.com/mhusam792/designing_ml_systems_rag/blob/main/assets/demo.gif)
+[![RAG Demo](assets/demo.gif)](https://github.com/mhusam792/designing_ml_systems_rag/blob/main/assets/demo.mp4)
 
 ---
 
