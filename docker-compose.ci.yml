@@ -2,7 +2,6 @@ services:
 
   ollama:
     image: ollama/ollama
-    container_name: ollama
 
     ports:
       - "11434:11434"
@@ -18,11 +17,10 @@ services:
       timeout: 5s
       retries: 10
 
-    # مهم جدًا: preload models
     entrypoint: >
       sh -c "
       ollama serve &
-      sleep 5 &&
+      sleep 8 &&
       ollama pull llama3.2:3b &&
       ollama pull nomic-embed-text &&
       wait
@@ -33,9 +31,6 @@ services:
       context: .
       dockerfile: docker/fastapi/Dockerfile
 
-    env_file:
-      - .env.docker
-
     ports:
       - "8000:8000"
 
@@ -45,6 +40,7 @@ services:
 
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
+      - PYTHONUNBUFFERED=1
 
     volumes:
       - ./data/processed/chroma_db:/app/data/processed/chroma_db
