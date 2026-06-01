@@ -13,11 +13,7 @@ A production-style **Retrieval-Augmented Generation (RAG) system** built on top 
 
 # 🚀 Demo
 
-> Add your demo video here
-
-```md
-📺 Live Demo: https://your-video-link
-```
+![RAG Demo](assets/demo.gif)
 
 ---
 
