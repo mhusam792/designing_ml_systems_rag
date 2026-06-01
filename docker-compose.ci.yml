@@ -11,16 +11,10 @@ services:
 
     restart: unless-stopped
 
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:11434/api/tags || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
     entrypoint: >
       sh -c "
       ollama serve &
-      sleep 8 &&
+      sleep 10 &&
       ollama pull llama3.2:3b &&
       ollama pull nomic-embed-text &&
       wait
@@ -35,8 +29,7 @@ services:
       - "8000:8000"
 
     depends_on:
-      ollama:
-        condition: service_healthy
+      - ollama
 
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
